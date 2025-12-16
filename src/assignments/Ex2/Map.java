@@ -11,6 +11,7 @@ import static jdk.internal.org.jline.utils.Colors.h;
  *
  */
 public class Map implements Map2D, Serializable{
+    private int[][] _map;
 
     // edit this class below
 	/**
@@ -19,6 +20,8 @@ public class Map implements Map2D, Serializable{
 	 * @param h
 	 * @param v
 	 */
+
+
 	public Map(int w, int h, int v) {init(w, h, v);}
 	/**
 	 * Constructs a square map (size*size).
@@ -35,10 +38,10 @@ public class Map implements Map2D, Serializable{
 	}
 	@Override
 	public void init(int w, int h, int v) {
-        int[][] map = new int[h][w];
+        _map = new int[h][w];
         for (int i=0; i<h; i++){
             for(int j=0; j<w; j++){
-                map[i][j]=v;
+                _map[i][j]=v;
             }
         }
 
@@ -47,55 +50,66 @@ public class Map implements Map2D, Serializable{
 	public void init(int[][] arr) {
         if ((arr== null)||(arr.length == 0)) {throw new RuntimeException("array cannot be null or with h=0 ");}
         int h= arr.length;
-        int w;
+        int w; //is that needed?
         if (arr[0].length>0 ){
          w=arr[0].length;}
         else {throw new RuntimeException("w most be larger then 0");}
 
-        int[][] map = new int[h][w];
+        _map = new int[h][w];
         for (int i=0; i<h; i++){
             if (arr[i].length != w) {
                 throw new RuntimeException("Array must have same length");
             }
             for(int j=0; j<w; j++){
-                map[i][j] = arr[i][j];
+                _map[i][j] = arr[i][j];
             }
         }
 
 	}
 	@Override
 	public int[][] getMap() {
-		int[][] ans = null;
+        int h= _map.length;
+        int w=_map[0].length;
+		int[][] ans = new int[h][w];
+        for(int r=0; r<h; r++){
+            for(int c=0; c<w; c++){//[2][1] arr[2] in place 1
+                ans[r][c]=_map[r][c];
+            }
+        }
 
 		return ans;
 	}
 	@Override
 	public int getWidth() {
-        int ans = -1;
-
-
+        int ans = _map[0].length;
         return ans;
     }
 	@Override
 	public int getHeight() {
-        int ans = -1;
-
+        int ans = _map.length ;
         return ans;
     }
 	@Override
 	public int getPixel(int x, int y) {
-        int ans = -1;
-
-        return ans;
+        if(dimFit(y,x)){
+        int ans =_map[y][x];
+        return ans;}
+        else{throw new RuntimeException("x or y out of dim"); }
     }
 	@Override
 	public int getPixel(Pixel2D p) {
-        int ans = -1;
-
-        return ans;
+        int x=p.getX(),y=p.getY();
+        if(dimFit(y,x)){
+        int ans =_map[y][x];
+        return ans;}
+        else{throw new RuntimeException("x or y out of dim"); }
 	}
 	@Override
 	public void setPixel(int x, int y, int v) {
+        if(dimFit(y,x)){
+            _map[y][x]=v;
+        }
+        else{throw new RuntimeException("x or y out of dim"); }
 
     }
 	@Override
@@ -181,5 +195,11 @@ public class Map implements Map2D, Serializable{
         return ans;
     }
 	////////////////////// Private Methods ///////////////////////
+    private boolean dimFit(int row, int col) {
+        boolean ans = (row == _map.length) && (col == _map[0].length);
+        return ans;
+    }
 
-}
+    }
+
+
