@@ -111,24 +111,24 @@ public class Ex2_GUI {
         drawMap(map);
     }
     /// ///////////// Private functions ///////////////
-    private Map maze(Map2D map){
-        int h= map.getHeight(),w=map.getWidth();
-        Index2D p1=new Index2D(0,0), p2=new Index2D(w-2,0);
-        for (int r = 0; r < h; r=r+2) {
-            {
-                p1.change(1,r);
-                p2.change(w-1,r);
-                if(r%3==0)
-                {
-                 p1.change(0,r);
-                 p2.change(w-2,r);
-                }
-                map.drawLine(p1,p2,7);
-
-            }
-        }
-        return (Map) map;
-    }
+//    private Map maze(Map2D map){
+//        int h= map.getHeight(),w=map.getWidth();
+//        Index2D p1=new Index2D(0,0), p2=new Index2D(w-2,0);
+//        for (int r = 0; r < h; r=r+2) {
+//            {
+//                p1.change(w-1,r);
+//                p2.change(1,r);
+//                if(r%3==0)
+//                {
+//                 p1.change(0,r);
+//                 p2.change(w-2,r);
+//                }
+//                map.drawLine(p1,p2,7);
+//
+//            }
+//        }
+//        return (Map) map;
+//    }
 //used AI it's 2:00 im super tired
     public static Map2D maze2(Map map) {
         int h = map.getHeight();
