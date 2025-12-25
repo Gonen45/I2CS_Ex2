@@ -25,8 +25,8 @@ public class Index2D implements Pixel2D {
 
     @Override
     public double distance2D(Pixel2D p2) {
-//        if p2 is null{}
-        return Math.sqrt( (this._w * p2.getX()) + (this._h * p2.getY()) );
+     if( p2 == null){throw new IllegalArgumentException("p2 can't be null");}
+        return Math.sqrt( Math.pow((p2.getX()-this._w),2) + Math.pow(( p2.getY()-this._h),2) );
     }
 
     @Override

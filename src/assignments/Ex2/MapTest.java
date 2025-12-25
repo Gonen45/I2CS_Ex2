@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
+import java.util.Arrays;
+
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -183,6 +185,11 @@ class MapTest {
 
         @Test
         void drawRect() {
+        _m1=new Map(50);
+        Index2D p2= new Index2D(10,10);
+        _m1.drawRect(p,p2,7);
+//        _m1.print
+
         }
 
 
@@ -211,5 +218,13 @@ class MapTest {
 
         @Test
         void allDistance() {
+            int[][] data = {{4,3,2,3,4},{3,2,1,2,3},{2,1,0,1,2},{3,2,1,2,3},{4,3,2,3,4}};
+            _m0= new Map(data);
+            p.change(2,2);
+            _m1=new Map(5);
+            Map2D map= new Map(5);
+            map=_m1.allDistance(p,4,false);
+            assertEquals(_m0,map);
+
         }
     }

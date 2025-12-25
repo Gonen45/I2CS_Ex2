@@ -188,6 +188,7 @@ public class Map implements Map2D, Serializable {
 
     @Override
     public void rescale(double sx, double sy) {
+        if(sx<=0 && sy<=0){throw new RuntimeException("sx or sy smaller than 0");}
         int new_h = (int) (this.getHeight() * sy), new_w = (int) (this.getWidth() * sx);
         int[][] re_map = new int[new_h][new_w];
         for (int r = 0; r < new_h; r++) {
@@ -456,69 +457,69 @@ public class Map implements Map2D, Serializable {
 
 
 //    old version
-    private int fill_in_rec(Pixel2D xy, int new_v, boolean cyclic) {
-        this.counter = 0;
-        int color = this.getPixel(xy);
-
-        if (color != new_v && isInside(xy)) {
-            filler(xy, color, new_v, cyclic);
-        }
-        return this.counter;
-    }
-
-    private void filler(Pixel2D p, int old_color, int new_v, boolean cyclic) {
-        int x =p.getX(), y=p.getY();
-        if (cyclic) {
-            int w =getWidth();
-            int h =getHeight();
-            x = (x+w)%w;
-            y = (y+h)%h;
-            p = new Index2D(x,y);
-        } else {
-            if (!isInside(p)) {return;}
-        }
-
-        if (getPixel(p) != old_color) {return;}
-
-        setPixel(p, new_v);
-        this.counter++;
-
-        filler(new Index2D(x, y + 1), old_color, new_v, cyclic);
-        filler(new Index2D(x, y - 1), old_color, new_v, cyclic);
-        filler(new Index2D(x + 1, y), old_color, new_v, cyclic);
-        filler(new Index2D(x - 1, y), old_color, new_v, cyclic);
-    }
-    private int neighbors_min_color(Map2D map,Index2D curr, boolean cyclic){
-        int v=0;
-        int r=map.getHeight(), c=map.getWidth();
-        ArrayList<Integer> list= new ArrayList<>();
-        int[][] dirct={{1,0},{-1,0},{0,1},{0,-1}};
-        for(int[] d: dirct)
-        {
-            int nx=curr.getX()+d[0],ny=curr.getY()+d[1];
-            Index2D n_curr= new Index2D(nx,ny);
-            if(cyclic){
-                if(nx==c){nx=0;} else if (nx==-1) {nx=c-1;}
-                if(ny==r){ny=0;} else if (ny==-1) {ny=r-1;}
-                n_curr.change(nx,ny);
-            }
-            else {
-                if ((nx < 0) || (nx >= c) || (ny < 0) || (ny >= r)) {
-                    continue;
-                }
-            }if(map.getPixel(n_curr)>=0)
-                {
-                    list.add(map.getPixel(n_curr));
-                }
-            }
-
-        if(!list.isEmpty())
-        {
-            v=Collections.min(list);
-        }
-
-        return v+1;
-    }
+//    private int fill_in_rec(Pixel2D xy, int new_v, boolean cyclic) {
+//        this.counter = 0;
+//        int color = this.getPixel(xy);
+//
+//        if (color != new_v && isInside(xy)) {
+//            filler(xy, color, new_v, cyclic);
+//        }
+//        return this.counter;
+//    }
+//
+//    private void filler(Pixel2D p, int old_color, int new_v, boolean cyclic) {
+//        int x =p.getX(), y=p.getY();
+//        if (cyclic) {
+//            int w =getWidth();
+//            int h =getHeight();
+//            x = (x+w)%w;
+//            y = (y+h)%h;
+//            p = new Index2D(x,y);
+//        } else {
+//            if (!isInside(p)) {return;}
+//        }
+//
+//        if (getPixel(p) != old_color) {return;}
+//
+//        setPixel(p, new_v);
+//        this.counter++;
+//
+//        filler(new Index2D(x, y + 1), old_color, new_v, cyclic);
+//        filler(new Index2D(x, y - 1), old_color, new_v, cyclic);
+//        filler(new Index2D(x + 1, y), old_color, new_v, cyclic);
+//        filler(new Index2D(x - 1, y), old_color, new_v, cyclic);
+//    }
+//    private int neighbors_min_color(Map2D map,Index2D curr, boolean cyclic){
+//        int v=0;
+//        int r=map.getHeight(), c=map.getWidth();
+//        ArrayList<Integer> list= new ArrayList<>();
+//        int[][] dirct={{1,0},{-1,0},{0,1},{0,-1}};
+//        for(int[] d: dirct)
+//        {
+//            int nx=curr.getX()+d[0],ny=curr.getY()+d[1];
+//            Index2D n_curr= new Index2D(nx,ny);
+//            if(cyclic){
+//                if(nx==c){nx=0;} else if (nx==-1) {nx=c-1;}
+//                if(ny==r){ny=0;} else if (ny==-1) {ny=r-1;}
+//                n_curr.change(nx,ny);
+//            }
+//            else {
+//                if ((nx < 0) || (nx >= c) || (ny < 0) || (ny >= r)) {
+//                    continue;
+//                }
+//            }if(map.getPixel(n_curr)>=0)
+//                {
+//                    list.add(map.getPixel(n_curr));
+//                }
+//            }
+//
+//        if(!list.isEmpty())
+//        {
+//            v=Collections.min(list);
+//        }
+//
+//        return v+1;
+//    }
 
     private void paddMap2D(int v) {
             for (int r = 0; r < this.getHeight(); r++) {
@@ -532,6 +533,15 @@ public class Map implements Map2D, Serializable {
 
 
     }
+//    private void print_map(){
+//        int h=this.getHeight(),w=this.getWidth();
+//        for (int r = 0; r < h; r++) {
+//            for (int c = 0; c < w; c++)
+//                System.out.print(_map[r][c] + " ");
+//            }
+//            System.out.println();
+//        }
+
 
 
 
