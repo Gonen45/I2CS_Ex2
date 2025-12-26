@@ -52,6 +52,8 @@ For every neighbor, it checks if it is inside the bounds (handling cyclic wrappi
 If a neighbor has a value of -1 (meaning it hasn't been visited yet), its value is updated to current_distance + 1.
 It returns a Map2D object containing these distance values.
 
+![bfs_all_distance](https://github.com/user-attachments/assets/3153a84f-1a55-4d37-b9d0-e2915f87aa7b)
+
 ---
 
 ## 🔗 References
