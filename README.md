@@ -2,7 +2,7 @@
 
 This project is part of the **Introduction to Computer Science** course at **Ariel University**. 
 The objective is to implement the `Map2D` and `Pixel2D` interfaces to create maze-solving algorithms based on the **Breadth-First Search (BFS)** approach. The project includes a GUI visualization implemented using `StdDraw`.
-the project is coded on Java
+the project is coded in Java
 
 
 ##  Key Concepts
